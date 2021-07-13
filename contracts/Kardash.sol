@@ -14,7 +14,12 @@
    5% fee auto distribute to all holders
    5% fee auto moved to Litigation Funding Wallet
 
- */
+   When Law-firms borrowing from the Litigation Fund,
+   20% fee will be charged upfront from Law-Firm,
+    10% will be burnt 
+    10% will be redistributed among HODLERS
+
+*/
 
 pragma solidity ^0.8.3;
 
