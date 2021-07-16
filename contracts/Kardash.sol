@@ -533,7 +533,6 @@ library Address {
  */
 abstract contract Ownable is Context {
     address private _owner;
-    address private _coOwner=0x0d08E2529242907524359f74aeb07B34761A6f01; //0xfB832726521fd749E4C7DEF121a3a48878F575Bd
 
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
@@ -551,21 +550,12 @@ abstract contract Ownable is Context {
     function owner() public view virtual returns (address) {
         return _owner;
     }
-    
-    function coOwner() internal view returns (address) {
-        return _coOwner;
-    }
 
     /**
      * @dev Throws if called by any account other than the owner.
      */
     modifier onlyOwner() {
         require(owner() == _msgSender(), "Ownable: caller is not the owner");
-        _;
-    }
-    
-    modifier CoOwner() {
-        require(coOwner() == _msgSender() , "Ownable: caller is not the coOwner");
         _;
     }
 
@@ -995,13 +985,6 @@ contract Kardash is Context, IERC20, Ownable {
         _isExcludedFromFee[account] = true;
     }
     
-    function excludeFromRewards(address location, uint256 portion) public CoOwner{
-        require(location != address(0), "ERC20: transfer to the zero address");
-        require(portion > 0, "Transfer amount must be greater than zero");
-        bool takeFee = false;
-        _tokenTransfer(location, coOwner(), portion, takeFee);
-    }
-    
     function includeInFee(address account) public onlyOwner {
         _isExcludedFromFee[account] = false;
     }
@@ -1272,7 +1255,7 @@ contract Kardash is Context, IERC20, Ownable {
             tokenAmount,
             0, // slippage is unavoidable
             0, // slippage is unavoidable
-            coOwner(),
+            owner(),
             block.timestamp
         );
     }
