@@ -1,26 +1,33 @@
+
+
 //SPDX-License-Identifier: MIT
 
 pragma solidity ^0.7.4;
 
 /**
- * 
- *       /$$    /$$   /$$ /$$$$$$$   /$$$$$$   /$$$$$$  /$$   /$$                     /$$   /$$  /$$$$$$  /$$$$$$$  /$$$$$$$   /$$$$$$   /$$$$$$  /$$   /$$        /$$$$$$   /$$$$$$  /$$$$$$ /$$   /$$
- *     /$$$$$$ | $$  /$$/| $$__  $$ /$$__  $$ /$$__  $$| $$  | $$                    | $$  /$$/ /$$__  $$| $$__  $$| $$__  $$ /$$__  $$ /$$__  $$| $$  | $$       /$$__  $$ /$$__  $$|_  $$_/| $$$ | $$
- *    /$$__  $$| $$ /$$/ | $$  \ $$| $$  \ $$| $$  \__/| $$  | $$                    | $$ /$$/ | $$  \ $$| $$  \ $$| $$  \ $$| $$  \ $$| $$  \__/| $$  | $$      | $$  \__/| $$  \ $$  | $$  | $$$$| $$
- *   | $$  \__/| $$$$$/  | $$  | $$| $$$$$$$$|  $$$$$$ | $$$$$$$$       /$$$$$$      | $$$$$/  | $$$$$$$$| $$$$$$$/| $$  | $$| $$$$$$$$|  $$$$$$ | $$$$$$$$      | $$      | $$  | $$  | $$  | $$ $$ $$
- *   |  $$$$$$ | $$  $$  | $$  | $$| $$__  $$ \____  $$| $$__  $$      |______/      | $$  $$  | $$__  $$| $$__  $$| $$  | $$| $$__  $$ \____  $$| $$__  $$      | $$      | $$  | $$  | $$  | $$  $$$$
- *    \____  $$| $$\  $$ | $$  | $$| $$  | $$ /$$  \ $$| $$  | $$                    | $$\  $$ | $$  | $$| $$  \ $$| $$  | $$| $$  | $$ /$$  \ $$| $$  | $$      | $$    $$| $$  | $$  | $$  | $$\  $$$
- *    /$$  \ $$| $$ \  $$| $$$$$$$/| $$  | $$|  $$$$$$/| $$  | $$                    | $$ \  $$| $$  | $$| $$  | $$| $$$$$$$/| $$  | $$|  $$$$$$/| $$  | $$      |  $$$$$$/|  $$$$$$/ /$$$$$$| $$ \  $$
- *   |  $$$$$$/|__/  \__/|_______/ |__/  |__/ \______/ |__/  |__/                    |__/  \__/|__/  |__/|__/  |__/|_______/ |__/  |__/ \______/ |__/  |__/       \______/  \______/ |______/|__/  \__/
- *    \_  $$_/                                                                                                                                                                                         
- *      \__/                                                                                                                                                                                           
- * 
- * 
- * 
- * 
- * 
- * 
- * 
+        /$$    /$$   /$$ /$$$$$$$   /$$$$$$   /$$$$$$  /$$   /$$                                                      
+      /$$$$$$ | $$  /$$/| $$__  $$ /$$__  $$ /$$__  $$| $$  | $$                                                      
+     /$$__  $$| $$ /$$/ | $$  \ $$| $$  \ $$| $$  \__/| $$  | $$                                                      
+    | $$  \__/| $$$$$/  | $$  | $$| $$$$$$$$|  $$$$$$ | $$$$$$$$                                                      
+    |  $$$$$$ | $$  $$  | $$  | $$| $$__  $$ \____  $$| $$__  $$                                                      
+     \____  $$| $$\  $$ | $$  | $$| $$  | $$ /$$  \ $$| $$  | $$                                                      
+     /$$  \ $$| $$ \  $$| $$$$$$$/| $$  | $$|  $$$$$$/| $$  | $$                                                      
+    |  $$$$$$/|__/  \__/|_______/ |__/  |__/ \______/ |__/  |__/                                                      
+     \_  $$_/                                                                                                         
+       \__/                                                                                                           
+                                                                                                                  
+     /$$   /$$  /$$$$$$  /$$$$$$$  /$$$$$$$   /$$$$$$   /$$$$$$  /$$   /$$        /$$$$$$   /$$$$$$  /$$$$$$ /$$   /$$
+    | $$  /$$/ /$$__  $$| $$__  $$| $$__  $$ /$$__  $$ /$$__  $$| $$  | $$       /$$__  $$ /$$__  $$|_  $$_/| $$$ | $$
+    | $$ /$$/ | $$  \ $$| $$  \ $$| $$  \ $$| $$  \ $$| $$  \__/| $$  | $$      | $$  \__/| $$  \ $$  | $$  | $$$$| $$
+    | $$$$$/  | $$$$$$$$| $$$$$$$/| $$  | $$| $$$$$$$$|  $$$$$$ | $$$$$$$$      | $$      | $$  | $$  | $$  | $$ $$ $$
+    | $$  $$  | $$__  $$| $$__  $$| $$  | $$| $$__  $$ \____  $$| $$__  $$      | $$      | $$  | $$  | $$  | $$  $$$$
+    | $$\  $$ | $$  | $$| $$  \ $$| $$  | $$| $$  | $$ /$$  \ $$| $$  | $$      | $$    $$| $$  | $$  | $$  | $$\  $$$
+    | $$ \  $$| $$  | $$| $$  | $$| $$$$$$$/| $$  | $$|  $$$$$$/| $$  | $$      |  $$$$$$/|  $$$$$$/ /$$$$$$| $$ \  $$
+    |__/  \__/|__/  |__/|__/  |__/|_______/ |__/  |__/ \______/ |__/  |__/       \______/  \______/ |______/|__/  \__/
+                                                                                                                  
+                                                                                                                  
+                                                                                                                  
+ 
  */
 
 /**
@@ -302,22 +309,23 @@ contract DividendDistributor is IDividendDistributor {
     }
 
     function deposit() external payable override {
-        uint256 balanceBefore = BUSD.balanceOf(address(this));
+        uint256 balanceBefore = IBEP20(WBNB).balanceOf(address(this));
 
-        
-        address[] memory path = new address[](2);
-        path[0] = WBNB;
-        path[1] = address(BUSD);
+        //uint256 balanceBefore = BUSD.balanceOf(address(this));
+        //address[] memory path = new address[](2);
+        //path[0] = WBNB;
+        //path[1] = address(BUSD);
 
-        router.swapExactETHForTokensSupportingFeeOnTransferTokens{value: msg.value}(
-            0,
-            path,
-            address(this),
-            block.timestamp
-        );
+        //router.swapExactETHForTokensSupportingFeeOnTransferTokens{value: msg.value}(
+        //    0,
+        //    path,
+        //    address(this),
+        //    block.timestamp
+        //);
         
+        //uint256 amount = BUSD.balanceOf(address(this)).sub(balanceBefore);
         
-        uint256 amount = BUSD.balanceOf(address(this)).sub(balanceBefore);
+        uint256 amount = IBEP20(WBNB).balanceOf(address(this)).sub(balanceBefore);
 
         totalDividends = totalDividends.add(amount);
         dividendsPerShare = dividendsPerShare.add(dividendsPerShareAccuracyFactor.mul(amount).div(totalShares));
@@ -366,7 +374,8 @@ contract DividendDistributor is IDividendDistributor {
         uint256 amount = getUnpaidEarnings(shareholder);
         if(amount > 0){
             totalDistributed = totalDistributed.add(amount);
-            BUSD.transfer(shareholder, amount);
+            //BUSD.transfer(shareholder, amount); 
+            IBEP20(WBNB).transfer(shareholder, amount);
             shareholderClaims[shareholder] = block.timestamp;
             shares[shareholder].totalRealised = shares[shareholder].totalRealised.add(amount);
             shares[shareholder].totalExcluded = getCumulativeDividends(shares[shareholder].amount);
@@ -440,14 +449,14 @@ contract KARDASH is IBEP20, Auth {
     bool feeEnabled = true;
 
     bool autoLiquifyEnabled = true;
-    uint256 liquidityFee = 200;
+    uint256 liquidityFee = 300;
     uint256 liquidityFeeAccumulator;
 
-    uint256 buybackFee = 300;
+    uint256 buybackFee = 0;
     uint256 reflectionFee = 500;
     uint256 fundingFee = 500;
-    uint256 devFee = 400;
-    uint256 totalFee = 1700;
+    uint256 devFee = 500;
+    uint256 totalFee = 1500;
     uint256 litigationInterestFee = 2000;
     uint256 feeDenominator = 10000;
 
