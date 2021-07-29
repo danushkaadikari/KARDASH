@@ -1,5 +1,4 @@
 
-
 //SPDX-License-Identifier: MIT
 
 pragma solidity ^0.7.4;
@@ -230,6 +229,7 @@ contract DividendDistributor is IDividendDistributor {
         uint256 totalRealised;
     }
 
+    IBEP20 BUSD = IBEP20(0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47); //IBEP20(0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56);
     address WBNB = 0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd; //0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c;
     IDEXRouter router;
 
@@ -404,8 +404,9 @@ contract DividendDistributor is IDividendDistributor {
 contract KARDASH is IBEP20, Auth {
     using SafeMath for uint256;
 
+    address BUSD = 0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47; //0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56;
     address WBNB = 0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd; //0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c;
-    address DEAD = 0x000000000000000000000000000000000000dEaD;
+    address airDropWallet = 0x000000000000000000000000000000000000dEaD;
 
     string constant _name = "KARDASH COIN";
     string constant _symbol = "$KDASH";
@@ -436,7 +437,7 @@ contract KARDASH is IBEP20, Auth {
 
     address public autoLiquidityReceiver;
     address public litigationFund = 0x2EB5AC2be5331715020E407a55cfa4b897d49372;
-    address private marketingdevFeeReceiver = 0x0d08E2529242907524359f74aeb07B34761A6f01;
+    address private marketingdev = 0x0d08E2529242907524359f74aeb07B34761A6f01;
     uint256 fundingFees;
     uint256 marketingdevFees;
 
@@ -445,7 +446,7 @@ contract KARDASH is IBEP20, Auth {
 
     uint256 public launchedAt;
 
-    bool autoBuybackEnabled = false;
+    bool autoBuybackEnabled = true;
     uint256 autoBuybackCap;
     uint256 autoBuybackAccumulator;
     uint256 autoBuybackAmount;
@@ -476,9 +477,10 @@ contract KARDASH is IBEP20, Auth {
 
         isDividendExempt[pair] = true;
         isDividendExempt[address(this)] = true;
-        isDividendExempt[DEAD] = true;
+        isDividendExempt[airDropWallet] = true;
 
         autoLiquidityReceiver = msg.sender;
+        //litigationFund = msg.sender;
 
         _balances[msg.sender] = _totalSupply;
         emit Transfer(address(0), msg.sender, _totalSupply);
@@ -517,8 +519,8 @@ contract KARDASH is IBEP20, Auth {
     }
 
     function _transferFrom(address sender, address recipient, uint256 amount) internal returns (bool) {
-        if(!isTxLimitExempt[sender]) {
-            require(_balances[recipient].add(amount) <= _totalSupply.div(10**3).mul(5), "Whale check Warning!");
+        if(isTxLimitExempt[sender] = false) {
+            require(_balances[recipient].add(amount) <= _totalSupply.div(10**3).mul(5), "Whale check Warning");
             require(amount <= _maxTxAmount, "TX Limit Exceeded in Transfer func");
         }
         
@@ -646,7 +648,7 @@ contract KARDASH is IBEP20, Auth {
             (bool success, ) = payable(litigationFund).call{value: amountBNBFunding, gas: 30000}("");
             if(success){ fundingFees = fundingFees.add(amountBNBFunding); }
 
-            (success, ) = payable(marketingdevFeeReceiver).call{value: amountBNBMarketingDev, gas: 30000}("");
+            (success, ) = payable(marketingdev).call{value: amountBNBMarketingDev, gas: 30000}("");
             if(success){ marketingdevFees = marketingdevFees.add(amountBNBMarketingDev); }
 
             emit SwapBack(amountToSwap, amountBNB);
@@ -670,12 +672,12 @@ contract KARDASH is IBEP20, Auth {
     }
 
     function _buyback(uint256 amount) internal {
-        buyTokens(amount, DEAD);
+        buyTokens(amount, airDropWallet);
         emit Buyback(amount);
     }
 
     function triggerAutoBuyback() internal {
-        buyTokens(autoBuybackAmount, DEAD);
+        buyTokens(autoBuybackAmount, airDropWallet);
         autoBuybackBlockLast = block.number;
         autoBuybackAccumulator = autoBuybackAccumulator.add(autoBuybackAmount);
         if(autoBuybackAccumulator > autoBuybackCap){ autoBuybackEnabled = false; }
@@ -747,7 +749,6 @@ contract KARDASH is IBEP20, Auth {
         uint256 _buybackFee,
         uint256 _reflectionFee,
         uint256 _fundingFee,
-        uint256 _marketingdevFee,
         uint256 _feeDenominator
     ) external authorized {
         feeEnabled = _enabled;
@@ -755,7 +756,6 @@ contract KARDASH is IBEP20, Auth {
         buybackFee = _buybackFee;
         reflectionFee = _reflectionFee;
         fundingFee = _fundingFee;
-        marketingdevFee = _marketingdevFee;
 
         totalFee = buybackFee.add(reflectionFee).add(fundingFee).add(marketingdevFee);
 
@@ -764,7 +764,7 @@ contract KARDASH is IBEP20, Auth {
         feeDenominator = _feeDenominator;
         require(totalFee.add(liquidityFee) < feeDenominator/5);
         
-        emit FeesUpdated(_enabled, _liquidityFee, _buybackFee, _reflectionFee, _fundingFee, _marketingdevFee, _feeDenominator);
+        emit FeesUpdated(_enabled, _liquidityFee, _buybackFee, _reflectionFee, _fundingFee, _feeDenominator);
     }
 
     function setFeeReceivers(address _autoLiquidityReceiver, address _litigationFund) external authorized {
@@ -844,7 +844,7 @@ contract KARDASH is IBEP20, Auth {
     event DividendExemptUpdated(address holder, bool exempt);
     event FeeExemptUpdated(address holder, bool exempt);
     event TxLimitExemptUpdated(address holder, bool exempt);
-    event FeesUpdated(bool enabled, uint256 liquidityFee, uint256 buybackFee, uint256 reflectionFee, uint256 marketingFee, uint256 devFee, uint256 feeDenominator);
+    event FeesUpdated(bool enabled, uint256 liquidityFee, uint256 buybackFee, uint256 reflectionFee, uint256 fundingFee, uint256 feeDenominator);
     event FeeReceiversUpdated(address autoLiquidityReceiver, address litigationFund);
     event SwapBackSettingsUpdated(bool enabled, uint256 amount);
     event AutoLiquifyUpdated(bool enabled);
